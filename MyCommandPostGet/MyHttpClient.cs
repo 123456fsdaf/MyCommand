@@ -20,18 +20,13 @@ namespace MyCommandPostGet
 
         public static async Task<JsonResponse> Post(string url,StringContent content)
         {
+#pragma warning disable CS8603 // 可能返回 null 引用。
             return await Task.Run(async() =>
             {
-                try
-                {
-                    var a = await HttpClient.PostAsync(url, content);
-                    return JsonConvert.DeserializeObject<JsonResponse>(await a.Content.ReadAsStringAsync());
-                }
-                catch (Exception)
-                {
-                    return new JsonResponse() { Message = "exit" };
-                }
+                var a = await HttpClient.PostAsync(url, content);
+                return JsonConvert.DeserializeObject<JsonResponse>(await a.Content.ReadAsStringAsync());
             });
+#pragma warning restore CS8603 // 可能返回 null 引用。
         }
         
 
